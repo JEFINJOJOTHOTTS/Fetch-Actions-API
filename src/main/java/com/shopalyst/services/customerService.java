@@ -10,6 +10,7 @@ import com.shopalyst.models.Activity;
 public class customerService {
    
     public List<Activity> getCustomerData(String customerId, String productId) {
+        
         List<Activity> activities = new ArrayList<>();
 
         return activities;
