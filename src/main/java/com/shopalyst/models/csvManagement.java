@@ -9,11 +9,10 @@ import org.apache.commons.csv.CSVFormat;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import com.shopalyst.models.Activity;
-
 @Service
 public class csvManagement {
-    public void readCSVFile(String customerId, String productId) {
+    public List<Activity> readCSVFile(String customerId, String productId) {
+        System.out.println("csv");
         try (
 
                 Reader in = new FileReader(new ClassPathResource("sample_data_csv.csv").getFile())) {
@@ -23,28 +22,34 @@ public class csvManagement {
                     .setAllowMissingColumnNames(true)
                     .setHeader("shopper_id", "timestamp", "action", "product_id", "count")
                     .setSkipHeaderRecord(true).build().parse(in).forEach(record -> {
-                        if (customerId.equals(record.get("shopper_id"))) {
-                            System.out.println(record.get("shopper_id"));
-
+                        if (productId == null) {
+                            if (customerId.equals(record.get("shopper_id"))) {
+                                System.out.println(record.get("shopper_id"));
+                                Activity activity = new Activity(record.get("shopper_id"), record.get("timestamp"),
+                                        record.get("action"),
+                                        record.get("product_id"), 1);
+                                activities.add(activity);
+                            }
+                        } else {
+                            if (customerId.equals(record.get("shopper_id"))
+                                    && productId.equals(record.get("product_id"))) {
+                                System.out.println(record.get("shopper_id"));
+                                Activity activity = new Activity(record.get("shopper_id"), record.get("timestamp"),
+                                        record.get("action"),
+                                        record.get("product_id"), 1);
+                                activities.add(activity);
+                            }
                         }
-                        // Activity activity = new Activity(record.shopper_id, " timestamp", "action",
-                        // "productId", 1);
-
-                        // activities.add(activity);
 
                     });
-            for (Activity activity : activities) {
-                System.out.println("Customer ID: " + activity.getCustomerId());
-                System.out.println("Timestamp: " + activity.getTimestamp());
-                System.out.println("Action: " + activity.getAction());
-                System.out.println("Product ID: " + activity.getProductId());
-                System.out.println("Count: " + activity.getCount());
-            }
+            return activities;
 
         } catch (Exception e) {
+            List<Activity> activities = new ArrayList<>();
             System.err.println("Unable to read CSV file" + e);
-            // ("Unable to read CSV file" + e);
-         }
+
+            return activities;
+        }
     }
 
 }
