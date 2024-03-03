@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "42d2474c-36f6-4a08-ac17-a5d3a08bb65d",
+		"name": "Fetch Actions API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28557665"
+	},
+	"item": [
+		{
+			"name": "customerId and productId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/CustomerAPI/customers/0B88F5BB43EF9E76D481A660946AC8B0/actions?productId=9E12BB4E3622B8AF2FF9F1741E4A5832",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"CustomerAPI",
+						"customers",
+						"0B88F5BB43EF9E76D481A660946AC8B0",
+						"actions"
+					],
+					"query": [
+						{
+							"key": "productId",
+							"value": "9E12BB4E3622B8AF2FF9F1741E4A5832"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "only customerId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/CustomerAPI/customers/0B88F5BB43EF9E76D481A660946AC8B0/actions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"CustomerAPI",
+						"customers",
+						"0B88F5BB43EF9E76D481A660946AC8B0",
+						"actions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invalid customer id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/CustomerAPI/customers/0B88F5BB43EF9E76D481A660946A0/actions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"CustomerAPI",
+						"customers",
+						"0B88F5BB43EF9E76D481A660946A0",
+						"actions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

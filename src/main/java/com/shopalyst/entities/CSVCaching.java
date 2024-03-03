@@ -25,7 +25,7 @@ public class CSVCaching {
     }
 
     /**
-     * Reads the csv file from sample_data_csv.csv file in the classpath 
+     * Reads the csv file from sample_data_csv.csv file in the classpath
      * and loads into memory
      */
     @PostConstruct
@@ -40,20 +40,19 @@ public class CSVCaching {
                         Activity activity = new Activity(record.get("shopper_id"), record.get("timestamp"),
                                 record.get("action"),
                                 record.get("product_id"), 1);
-                        if(activityMap.get(activity.getCustomerId()) != null) {
-                             activityMap.get(activity.getCustomerId()).add(activity);
-                            
+                        if (activityMap.get(activity.getCustomerId()) != null) {
+                            activityMap.get(activity.getCustomerId()).add(activity);
+
                         } else {
                             List<Activity> activityList = new ArrayList<>();
                             activityList.add(activity);
                             activityMap.put(activity.getCustomerId(), activityList);
                         }
-                            
 
                     });
-            
+
         } catch (Exception e) {
-            System.err.println("Unable to read CSV file" + e);
+            throw new Error("CSV file can not;");
         }
     }
 

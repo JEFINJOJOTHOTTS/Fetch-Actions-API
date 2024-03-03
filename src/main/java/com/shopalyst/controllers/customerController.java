@@ -26,11 +26,10 @@ public class CustomerController {
             @RequestParam(required = false) String productId,
             @PathVariable("customerId") String customerId) {
         try {
-
             List<Activity> activities = customerService.getCustomerData(customerId, productId);
-            
-            return ResponseEntity.ok().body(activities);
 
+            return ResponseEntity.ok()
+                    .body(activities);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -38,4 +37,5 @@ public class CustomerController {
         }
     }
 
+    
 }
