@@ -1,55 +1,56 @@
-package com.shopalyst.models;
+/* 
+ * code if the data is fetched for csv file for every API call;
+ */
 
-import java.io.FileReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
+// package com.shopalyst.models;
 
-import org.apache.commons.csv.CSVFormat;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
+// import java.io.FileReader;
+// import java.io.Reader;
+// import java.util.ArrayList;
+// import java.util.List;
 
-@Service
-public class csvManagement {
-    public List<Activity> readCSVFile(String customerId, String productId) {
-        System.out.println("csv");
-        try (
+// import org.apache.commons.csv.CSVFormat;
+// import org.springframework.core.io.ClassPathResource;
 
-                Reader in = new FileReader(new ClassPathResource("sample_data_csv.csv").getFile())) {
-            List<Activity> activities = new ArrayList<>();
+// // @Service
+// public class CSVManagement {
+//     public List<Activity> readCSVFile(String customerId, String productId) {
+//         try (
 
-            CSVFormat.RFC4180.builder()
-                    .setAllowMissingColumnNames(true)
-                    .setHeader("shopper_id", "timestamp", "action", "product_id", "count")
-                    .setSkipHeaderRecord(true).build().parse(in).forEach(record -> {
-                        if (productId == null) {
-                            if (customerId.equals(record.get("shopper_id"))) {
-                                System.out.println(record.get("shopper_id"));
-                                Activity activity = new Activity(record.get("shopper_id"), record.get("timestamp"),
-                                        record.get("action"),
-                                        record.get("product_id"), 1);
-                                activities.add(activity);
-                            }
-                        } else {
-                            if (customerId.equals(record.get("shopper_id"))
-                                    && productId.equals(record.get("product_id"))) {
-                                System.out.println(record.get("shopper_id"));
-                                Activity activity = new Activity(record.get("shopper_id"), record.get("timestamp"),
-                                        record.get("action"),
-                                        record.get("product_id"), 1);
-                                activities.add(activity);
-                            }
-                        }
+//                 Reader in = new FileReader(new ClassPathResource("sample_data_csv.csv").getFile())) {
+//             List<Activity> activities = new ArrayList<>();
 
-                    });
-            return activities;
+//             CSVFormat.RFC4180.builder()
+//                     .setAllowMissingColumnNames(true)
+//                     .setHeader("shopper_id", "timestamp", "action", "product_id", "count")
+//                     .setSkipHeaderRecord(true).build().parse(in).forEach(record -> {
+//                         if (productId == null) {
+//                             if (customerId.equals(record.get("shopper_id"))) {
+//                                 Activity activity = new Activity(record.get("shopper_id"), record.get("timestamp"),
+//                                         record.get("action"),
+//                                         record.get("product_id"), 1);
+//                                 activities.add(activity);
+//                             }
+//                         } else {
+//                             if (customerId.equals(record.get("shopper_id"))
+//                                     && productId.equals(record.get("product_id"))) {
+//                                 Activity activity = new Activity(record.get("shopper_id"), record.get("timestamp"),
+//                                         record.get("action"),
+//                                         record.get("product_id"), 1);
+//                                 activities.add(activity);
+//                             }
+//                         }
 
-        } catch (Exception e) {
-            List<Activity> activities = new ArrayList<>();
-            System.err.println("Unable to read CSV file" + e);
+//                     });
 
-            return activities;
-        }
-    }
+//             return activities;
 
-}
+//         } catch (Exception e) {
+//             List<Activity> activities = new ArrayList<>();
+//             System.err.println("Unable to read CSV file" + e);
+
+//             return activities;
+//         }
+//     }
+
+// }

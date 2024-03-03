@@ -2,25 +2,51 @@ package com.shopalyst.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shopalyst.entities.CSVCaching;
 import com.shopalyst.models.Activity;
-import com.shopalyst.models.csvManagement;
 
 @Service
-public class customerService {
+public class CustomerService {
 
-    @Autowired
-    csvManagement csvManagement;
+    // @Autowired
+    // csvManagement csvManagement;
+
+    private final Map<String, List<Activity>> activityMap;
+
+    public CustomerService(CSVCaching csvCaching) {
+        this.activityMap = csvCaching.getActivityMap();
+    }
 
     public List<Activity> getCustomerData(String customerId, String productId) {
-        System.out.println("service");
-        List<Activity> activities = csvManagement.readCSVFile(customerId, productId);
 
-        // List<Activity> activities = new ArrayList<>();
+        //code for fetching csv file in every API call
+        // List<Activity> activities = csvManagement.readCSVFile(customerId, productId);
 
-        return activities;
+        List<Activity> activities = activityMap.get(customerId);
+      
+        if (productId == null && activities != null) {//only customerId
+            return activities;
+        } else if (activities != null && productId != null) {// both customer and product Id
+           
+            List<Activity> activitiesMatchProductId = new ArrayList<>();
+
+            for (Activity activity : activities) {
+                if (activity.getProductId().equals(productId)) {
+                    activitiesMatchProductId.add(activity);
+                }
+            }
+            if (activitiesMatchProductId.isEmpty()) {
+                throw new IllegalArgumentException("no activities found; check the customer Id & product Id");
+
+            }
+            return activitiesMatchProductId;
+
+        } else {
+            throw new IllegalArgumentException("no activities found; check the customer Id");
+        }
     }
 }
